@@ -1,7 +1,3 @@
-* html #jnotifica{
-	bottom:auto;
-	top:expression(eval(document.documentElement.scrollTop));
-}
 body{
 	padding:0;
 	margin:0;

@@ -15,7 +15,10 @@
 	  timer, // Timeout var
 	  main, // Main container
 	  content, // Message container
-	  close; // Close button container
+	  close, // Close button container
+	  IE6_FIX; // IE6 bug fix =p
+	
+	//var debug_ie = true;
 	
 	// Init function
 	$.jnotifica = $.N = function(msg,options,timeout){
@@ -23,6 +26,7 @@
 			timeout = options;
 			options = null;
 		}
+		clearInterval(IE6_FIX);
 		// Clear timeout (d'oh)
 		clearTimeout(timer);
 		// Unbind 'click' event and remove the main container (if exists)
@@ -41,6 +45,7 @@
 		if(main){
 		main
 			[main.opts.closeEffect](main.opts.speed,function(){
+				clearInterval(IE6_FIX);
 				$(main).remove();
 			});
 		}
@@ -81,8 +86,14 @@
 		opts.css = $.extend({},$.jnotifica.defaults.css,opts.css || {});
 		opts.closeCss = $.extend({},$.jnotifica.defaults.closeCss,opts.closeCss || {});
 		
-		if(ie6){ main.css('position','absolute') }
-		else{ main.css({position:'fixed',top:0}) }
+		if(ie6 || typeof debug_ie != 'undefined'){
+			main.css('position','absolute');
+			IE6_FIX = setInterval(function(){
+				var offset = 0;
+				var element = document.getElementById('jnotifica');
+				if(element) element.style.top = (document.documentElement.scrollTop + offset) + 'px';
+			},50);
+		}else{ main.css({position:'fixed',top:0}) }
 		
 		main.css($.jnotifica.mainCss);
 		content.css(opts.css).html(msg || '').appendTo(main); // Apply the CSS and append the message container to the main container
