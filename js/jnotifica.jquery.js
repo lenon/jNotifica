@@ -1,6 +1,6 @@
 /*
  * jQuery jNotifica plugin
- * Version 1.0 (3-OUT-2009)
+ * Version 1.1 (4-OUT-2009)
  *
  * Copyright (c) 2009 Lenon Marcel <contato@techlive.org>
  * Dual licensed under the MIT and GPL licenses:
