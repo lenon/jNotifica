@@ -1,67 +1,141 @@
 /*
  * jQuery jNotifica plugin
- * Version 1.1 (4-OUT-2009)
+ * Version 2 (11-NOV-2009)
  *
- * Copyright (c) 2009 Lenon Marcel <contato@techlive.org>
+ * Copyright (c) 2009 Lenon Marcel <contato@lenonmarcel.com.br>
  * Dual licensed under the MIT and GPL licenses:
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
  *
- * Read more: http://techlive.org/source/jnotifica-plugin-de-notificacoes-pra-jquery/
+ * Read more: http://jnotifica.lenonmarcel.com.br/
  * 
  */
 ;(function($){
-	var
-	  timer, // Timeout var
-	  main, // Main container
-	  content, // Message container
-	  close, // Close button container
-	  IE6_FIX; // IE6 bug fix =p
-	
+	var timer, main, content, close, IE6_FIX;
 	//var debug_ie = true;
 	
-	// Init function
-	$.jnotifica = $.N = function(msg,options,timeout){
-		if(typeof options == 'number'){
-			timeout = options;
-			options = null;
-		}
-		clearInterval(IE6_FIX);
-		// Clear timeout (d'oh)
-		clearTimeout(timer);
-		// Unbind 'click' event and remove the main container (if exists)
-		$('#jnotifica').unbind('click').remove();
-		// Create containers
-		main = $('<div id="jnotifica"/>').hide();
-		content = $('<div class="jnotifica-message"/>');
-		close = $('<a href="#" class="jnotifica-close"/>');
+	$.jnotifica = $.N = function(message, options, timeout){
+		var self = $.jnotifica;
+		var _options;
 		
-		// Make the notification
-		show(msg,options,timeout);
+		self.remove();
+		
+		if(typeof message === 'undefined') var message = 'Olá! :D';
+		if(typeof options === 'undefined') var options = {}       ;
+		if(typeof timeout === 'undefined') var timeout = 10000    ;
+		
+		_options            = $.extend({}, self.defaults         , options         );
+		_options.css        = $.extend({}, self.defaults.css     , options.css     );
+		_options.closeCss   = $.extend({}, self.defaults.closeCss, options.closeCss);
+		
+		return self.show(message, _options, timeout);
 	};
-	// Close function
-	$.jnotifica.close = $.N.close = function(){
+	
+	$.jnotifica.remove = function(){
+		clearInterval(IE6_FIX);
 		clearTimeout(timer);
-		if(main){
-		main
-			[main.opts.closeEffect](main.opts.speed,function(){
-				clearInterval(IE6_FIX);
-				$(main).remove();
+		$('#jnotifica')
+			.unbind('click')
+			.remove();
+	}
+	
+	$.jnotifica.check_ie6 = function(){
+		if(typeof debug_ie !== 'undefined' && debug_ie === true) return true;
+		return $.browser.msie && /MSIE 6.0/.test(navigator.userAgent);
+	}
+	
+	$.jnotifica.IE6_FIX = function(){
+		var offset = 0;
+		var element = document.getElementById('jnotifica');
+		
+		if(element) {
+			element.style.top = (document.documentElement.scrollTop + offset) + 'px';
+		}
+	}
+	
+	$.jnotifica.create_elements = function(){
+		main    = $(document.createElement('DIV')).attr    ('id','jnotifica'   );
+		content = $(document.createElement('DIV')).addClass('jnotifica-message');
+		close   = $(document.createElement('A'  ))
+					.attr('href','#')
+					.addClass('jnotifica-close-button');
+		main.hide();
+		content.appendTo(main);
+		
+		$('body').prepend(main);
+	}
+	
+	$.jnotifica.close = function(){
+		clearTimeout(timer);
+		if(typeof main !== 'undefined'){
+			var is = $.isFunction(main.options.callback);
+			switch( main.options.effect ){
+				case 'none':
+					main.remove(); break;
+					if(is) main.options.callback();
+				case 'fade':
+					main.fadeOut(main.options.speed,function(){ main.remove(); if(is) main.options.callback(); }); break;
+				default:
+					main.slideUp(main.options.speed,function(){ main.remove(); if(is) main.options.callback(); });
+			}
+		}
+	}
+	
+	$.jnotifica.show = function(message, options, timeout){
+		var self = $.jnotifica;
+		var is_ie6 = self.check_ie6();
+		
+		self.create_elements();
+		
+		if(is_ie6 === true){
+			main.css(self.ie6_css);
+			IE6_FIX = setInterval(function(){ self.IE6_FIX() },50);
+		}else{
+			main.css(self.real_browsers_css);
+		}
+		main.css   (self.needed_css);
+		content.css(options.css    ).html(message);
+		
+		if(options.closeClick){
+			main.click(function(e){
+				e.preventDefault();
+				self.close();
 			});
 		}
+		if(options.closeButton){
+			close
+				.html(options.closeText)
+				.css(self.close_button_css)
+				.css(options.closeCss)
+				.prependTo(content)
+				.click(function(e){
+					e.preventDefault();
+					self.close();
+				});
+		}
+		
+		main.options = options;
+		
+		switch( options.effect ){
+			case 'none':
+				main.show(); break;
+			case 'fade':
+				main.fadeIn(options.speed); break;
+			default:
+				main.slideDown(options.speed);
+		}
+		
+		if(typeof timeout !== 'undefined' && timeout !== 0) timer = setTimeout(function(){self.close()},timeout);
+		if($.isFunction(options.openCallback)) options.openCallback();
 	};
 	
-	$.jnotifica.mainCss = {left:0,width:'100%',zIndex:'10000',padding:0,margin:0}; // Main container CSS
-	
-	// Default options
 	$.jnotifica.defaults = {
-		effect : 'slideDown', // Effect
-		speed : 800, // Effect speed
-		closeEffect : 'slideUp', // Close effect
-		closeOnClick : true, // Close on click?
-		closeButton : true, // Show the close button?
-		closeText : 'close', // Text of close button
-		css : { // Message CSS
+		effect : 'slide',
+		speed : 800,
+		closeClick : true,
+		closeButton : true,
+		closeText : 'fechar',
+		css : {
 			color : '#fff',
 			opacity : 0.8,
 			cursor : 'pointer',
@@ -71,58 +145,32 @@
 			fontFamily : 'Arial, sans-serif',
 			textAlign : 'left'
 		},
-		closeCss : { // Close button CSS
-			float:'right',
+		closeCss: {
 			fontSize:'12px',
-			color:'#fff',
-			textDecoration:'none'
-		}
+			color:'#fff'
+		},
+		openCallback: function(){},
+		callback: function(){}
 	};
-	// Show the notification
-	show = function(msg,opts,timeout){
-		var ie6 = $.browser.msie && /MSIE 6.0/.test(navigator.userAgent); // It's IE6?
-		
-		main.opts = opts = $.extend({},$.jnotifica.defaults,opts || {});
-		opts.css = $.extend({},$.jnotifica.defaults.css,opts.css || {});
-		opts.closeCss = $.extend({},$.jnotifica.defaults.closeCss,opts.closeCss || {});
-		
-		if(ie6 || typeof debug_ie != 'undefined'){
-			main.css('position','absolute');
-			IE6_FIX = setInterval(function(){
-				var offset = 0;
-				var element = document.getElementById('jnotifica');
-				if(element) element.style.top = (document.documentElement.scrollTop + offset) + 'px';
-			},50);
-		}else{ main.css({position:'fixed',top:0}) }
-		
-		main.css($.jnotifica.mainCss);
-		content.css(opts.css).html(msg || '').appendTo(main); // Apply the CSS and append the message container to the main container
-		
-		if(opts.closeOnClick){ // Click event
-			main.click(function(event){
-				event.preventDefault();
-				$.jnotifica.close();
-			});
-		}
-		if(opts.closeButton){ // Show the close button
-			close
-			  .text(opts.closeText)
-			  .css(opts.closeCss)
-			  .prependTo(content)
-			  .click(function(event){
-			  	event.preventDefault();
-			  	$.jnotifica.close();
-			  });
-		}
-		
-		// Show the notification
-		main
-		  .prependTo('BODY')
-		  [opts.effect](opts.speed);
-		
-		clearTimeout(timer);
-		
-		// Timeout
-		if(timeout) timer = setTimeout(function(){$.jnotifica.close()},timeout);
+	
+	$.jnotifica.needed_css = {
+		left     :0      ,
+		width    :'100%' ,
+		zIndex   :'10000',
+		padding  :0      ,
+		margin   :0
+	};
+	
+	$.jnotifica.real_browsers_css = {
+		position : 'fixed',
+		top      : 0
+	};
+	
+	$.jnotifica.ie6_css = {
+		position : 'absolute'
+	};
+	
+	$.jnotifica.close_button_css = {
+		float    : 'right'
 	}
 })(jQuery);

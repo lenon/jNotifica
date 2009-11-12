@@ -1,214 +1,78 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>jNotifica - by Lenon Marcel</title>
-	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
-	<script src="js/jquery-1.3.2.min.js"></script>
-	<script src="js/jnotifica.jquery.js"></script>
-	<script src="js/examples.js"></script>
+	<title>jNotifica - Plugin de notificações pra jQuery</title>
+	
+	<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
+	<meta name="robots" content="index, follow" />
+	
+	<meta name="description" content="jNotifica é um plugin de notificações criado para o framework jQuery. Possui diversas opções, é compatível com todos os navegadores reais e com o IE 6." />
+	<meta name="keywords" content="jquery, javascript, plugin, notificações, mensagens, framework, navegador, IE, Firefox, Chrome, Opera" />
+	<meta name="author" content="Lenon Marcel" />
+	
+	<link rel="stylesheet" href="css/default.css" type="text/css" />
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+	<script src="js/jnotifica.jquery.js" type="text/javascript"></script>
+	<script src="js/index.js" type="text/javascript"></script>
 </head>
 <body>
 	<div id="container">
-		<h1>jNotifica</h1>
-		<h3>jQuery notifications plugin</h3>
-		<p>Tested in following browsers:<br/>
+		<div id="header">
+			<h1><a href="index.html"><img src="images/jnotifica-logo.png" alt="jNotifica - Plugin de notificações pra jQuery" title="Index" /></a></h1>
+			<div class="nav">
+				<a href="index.html">Home</a> / 
+				<a href="examples.html">Exemplos</a> / 
+				<a href="usage.html">Como usar</a> / 
+				<a href="options.html">Lista de opções</a> / 
+				<a href="download.html">Download</a>
+			</div>
+		</div>
+		<div id="content">
+			<h2>O que é?</h2>
+			<p>O jNotifica é um plugin de notificações pra jQuery (JS). Foi criado com o objetivo de exibir mensagens amigáveis ao usuário, para evitar o uso de alerts() por exemplo.</p>
+			<h2>Funciona em quais navegadores?</h2>
+			<p>É compatível com a maioria dos navegadores atuais (e o IE6):</p>
 			<ul>
-				<li>Opera 10</li>
-				<li>Internet Explorer 6, 7 and 8</li>
-				<li>Firefox 3.5</li>
-				<li>Google Chrome 3</li>
+				<li>Firefox</li>
+				<li>Opera</li>
+				<li>Google Chrome</li>
+				<li>Internet Explorer (6+)</li>
 			</ul>
-			However, should work on other browsers. Or not...
-		</p>
-		<h4>Default usage:</h4>
-		<code>$.jnotifica(MESSAGE, [TIMEOUT])</code> or <code>$.jnotifica(MESSAGE, [OPTIONS, TIMEOUT])</code>
-		<h4>Shortcut:</h4>
-		<code>$.N(MESSAGE, [TIMEOUT])</code> or <code>$.N(MESSAGE, [OPTIONS, TIMEOUT])</code>
-		<h4>Examples:</h4>
-		<dl>
-			<dt>Example 1 - Default options (without timeout)</dt>
-			<dd>
-				<p>
-					<a id="example1" href="#">Show notification</a>
-				</p>
-				<code>
-					$.jnotifica('Hello, world!');
-				</code>
-			</dd>
-			<dt>Example 2 - 5 seconds timeout</dt>
-			<dd>
-				<p>
-					<a id="example2" href="#">Show notification</a>
-				</p>
-				<code>
-					$.jnotifica('Hello, world!',5000);
-				</code>
-			</dd>
-			<dt>Example 3 - 5 seconds timeout, without close button</dt>
-			<dd>
-				<p>
-					<a id="example3" href="#">Show notification</a>
-				</p>
-				<code>
-					$.jnotifica('Hello, world!',{
-						closeButton : false
-					},5000);
-				</code>
-			</dd>
-			<dt>Example 4 - Fade effect</dt>
-			<dd>
-				<p>
-					<a id="example4" href="#">Show notification</a>
-				</p>
-				<code>
-					$.jnotifica('Hello, world!',{
-						effect : 'fadeIn',
-						closeEffect : 'fadeOut'
-					});
-				</code>
-			</dd>
-			<dt>Example 5 - White background</dt>
-			<dd>
-				<p>
-					<a id="example5" href="#">Show notification</a>
-				</p>
-				<code>
-					$.jnotifica('Hello, world!',{
-						effect : 'fadeIn',
-						closeEffect : 'fadeOut',
-						css: {
-							background : '#fff',
-							color : '#000',
-							borderBottom : '2px solid #444'
-						}
-					});
-				</code>
-			</dd>
-		</dl>
-		<h4>Options:</h4>
-		<table>
-			<thead>
-				<tr>
-					<th>Option</th>
-					<th>Default</th>
-					<th>Possible values</th>
-				</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>effect</td>
-				<td>slideDown</td>
-				<td>fadeIn, slideDown</td>
-			</tr>
-			<tr>
-				<td>speed</td>
-				<td>800</td>
-				<td>Milliseconds</td>
-			</tr>
-			<tr>
-				<td>closeEffect</td>
-				<td>slideUp</td>
-				<td>fadeOut, slideOut</td>
-			</tr>
-			<tr>
-				<td>closeOnClick</td>
-				<td>true</td>
-				<td>boolean</td>
-			</tr>
-			<tr>
-				<td>closeButton</td>
-				<td>true</td>
-				<td>boolean</td>
-			</tr>
-			<tr>
-				<td>closeText</td>
-				<td>close</td>
-				<td>string</td>
-			</tr>
-			<tr>
-				<td>css</td>
-				<td>
-					<table>
-						<tr>
-							<td>color</td>
-							<td>#fff</td>
-						</tr>
-						<tr>
-							<td>opacity</td>
-							<td>0.8</td>
-						</tr>
-						<tr>
-							<td>cursor</td>
-							<td>pointer</td>
-						</tr>
-						<tr>
-							<td>background</td>
-							<td>#000</td>
-						</tr>
-						<tr>
-							<td>padding</td>
-							<td>25</td>
-						</tr>
-						<tr>
-							<td>fontSize</td>
-							<td>15px</td>
-						</tr>
-						<tr>
-							<td>fontFamily</td>
-							<td>Arial, sans-serif</td>
-						</tr>
-						<tr>
-							<td>textAlign</td>
-							<td>left</td>
-						</tr>
-					</table>
-				</td>
-				<td>List options</td>
-			</tr>
-			<tr>
-				<td>closeCss</td>
-				<td>
-					<table>
-						<tr>
-							<td>float</td>
-							<td>right</td>
-						</tr>
-						<tr>
-							<td>fontSize</td>
-							<td>12px</td>
-						</tr>
-						<tr>
-							<td>color</td>
-							<td>#fff</td>
-						</tr>
-						<tr>
-							<td>textDecoration</td>
-							<td>none</td>
-						</tr>
-					</table>
-				</td>
-				<td>List options</td>
-			</tr>
-			</tbody>
-		</table>
-		<h4>Collaborate:</h4>
-		The code is available on <a href="http://github.com/lenon/jNotifica/tarball/master">Github</a>, you can create a fork and collaborate with your code! (:
-		<h4>Download:</h4>
-		<a href="http://github.com/lenon/jNotifica/tarball/master">Tarball</a><br/>
-		<a href="http://github.com/lenon/jNotifica/zipball/master">ZIP file</a><br/>
-		<h3>Donate! :D</h3>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
-">
-<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypal.com/pt_BR/i/scr/pixel.gif" width="1" height="1">
-</form>
-		<h4>Contact:</h4>
-		You can contact via email: contato@techlive.org <i>or</i> lenon.marcel@gmail.com
-		<h5>Enjoy! :-)</h5>
+			<h2>Legal, é só "linkar" a biblioteca jQuery e já posso utilizá-lo?</h2>
+			<p>Sim! O jNotifica não precisa de nenhum outro plugin, nem CSS extra. É só linkar o jQuery e o plugin que você já pode utilizar os métodos/funções disponíveis. :)</p>
+			<h2>Quero exemplos! :P</h2>
+			<p>Então vá até a <a href="examples.html">página de exemplos</a>!
+			<h2>Quanto custa?</h2>
+			<p>Nenhum tostão! Você pode utilizar à vontade, inclusive para fins comerciais. O plugin está sob uma licença GPL.</p>
+			<h2>Encontrei um bug, como faço para reportá-lo?</h2>
+			<p>Abra um <a href="http://github.com/lenon/jNotifica/issues">issue no Github</a>, descrevendo o bug e (se possível) como reproduzir o problema. Screenshots também ajudam um bocado. Ou, se preferir, pode mandar um email para <strong>contato(at)lenonmarcel.com.br</strong>.</p>
+			<h2>Gostaria de colaborar com o projeto</h2>
+			<p>Ótimo! Você pode criar um fork do projeto. Aí, quando criar algo legal e estiver pronto, é só solicitar um Pull Request no <a href="http://github.com/lenon/jNotifica/">Github do jNotifica</a>. :)</p>
+			<h2>Eu sou uma pessoa legal e gostaria de fazer uma doação</h2>
+			<p>Doações incentivam muito nosso trabalho e ajudam a cobrir os custos (o café é meio caro por aqui :P). Se você deseja doar alguma quantia (qualquer quantia), pode usar um dos botões abaixo:</p>
+			<span style="text-align:center;">
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+				<p><input type="hidden" name="cmd" value="_s-xclick"/>
+				<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----"/>
+				<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"/>
+				<img alt="" border="0" src="https://www.paypal.com/pt_BR/i/scr/pixel.gif" width="1" height="1"/></p>
+			</form>
+			<form target="pagseguro" action="https://pagseguro.uol.com.br/checkout/doacao.jhtml" method="post">
+				<p><input type="hidden" name="email_cobranca" value="lenon.marcel@gmail.com"/>
+				<input type="hidden" name="moeda" value="BRL">
+				<input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacao/FacaSuaDoacao.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!"/></p>
+			</form>
+			</span>
+			<h2>Repositório no Github</h2>
+			<p>Todo o código fonte (inclusive esta página de ajuda) está <a href="http://github.com/lenon/jNotifica/">disponível no Github</a>.
+			<h2>Como entrar em contato</h2>
+			<p>Você pode entrar em contato através do email <strong>contato(at)lenonmarcel.com.br</strong>. Ou através do <a href="http://twitter.com/lenonm/">meu Twitter</a>.</p>
+			<h4>Enjoy. :)</h4>
+		</div>
+		<div id="footer">
+			
+		</div>
 	</div>
 </body>
 </html>
