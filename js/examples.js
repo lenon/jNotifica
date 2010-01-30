@@ -83,4 +83,16 @@ jQuery(document).ready(function(){
       position: 'bottom'
     });
   });
+  $('#example_15').click(function(){
+    $.jnotifica('Hello from Brazil!',{
+      margin: 10,
+      width: 400,
+      effect: 'fade',
+      padding: 10,
+      msgCss:{
+        textAlign: 'center'
+      },
+      classes: 'jnotifica_extra_class'
+    });
+  });
 });

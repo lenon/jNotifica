@@ -43,3 +43,11 @@ table td{
 #content{
   text-align:justify;
 }
+
+.jnotifica_extra_class{
+  font-weight: bold;
+}
+.jnotifica_extra_class .jnotifica_bg{
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}

@@ -17,8 +17,8 @@
   $.jnotifica_defaults = {
     margin    : 0,
     position  : 'top', // 'top' or 'bottom'
-    width     : 'all', // 'all' for 100% or width in pixels
-    align     : 'center',// 'center', 'left' or 'right' - only used with width != all
+    width     : 'all', // width in pixels, or 'all' for 100%
+    align     : 'center',// 'center', 'left' or 'right' (only used with width != all)
     padding   : 25,
     background: '#000',
     zIndex    : 100,
@@ -34,7 +34,7 @@
     speed      : 500,
     timeout    : 5000,
     clickClose : true, // Click to close?
-    close      : { // Close button properties, or FALSE for no close button
+    close      : { // close button properties, or FALSE for no close button
       text : '[CLOSE]',
       css  : {
         color   : '#fff',
@@ -44,7 +44,8 @@
         right   : 10,
         cursor  : 'pointer'
       }
-    }
+    },
+    classes : '' // extra classes for the main div
   }
 
   function close(obj){
@@ -72,6 +73,7 @@
     $(obj).stop().remove();
   }
 
+  // ugly support for an ugly browser
   function ie6TopFix(){
     var element = document.getElementById('jnotifica_main');
     if(element){
@@ -96,6 +98,7 @@
           width   : '100%',
           left    : 0
         })
+        .addClass(opt.classes)
         .hide(),
 
       Spc = $('<div class="jnotifica_spc"/>')
