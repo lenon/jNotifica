@@ -49,13 +49,13 @@ jQuery(document).ready(function(){
   $('#example_9').click(function(){
     $.jnotifica('Hello from Brazil!',{
       cursor:'default',
-      clickNClose: false
+      clickClose: false
     });
   });
   $('#example_10').click(function(){
     $.jnotifica('Aguarde o timeout ;-)',{
       cursor:'default',
-      clickNClose: false,
+      clickClose: false,
       close: false
     });
   });

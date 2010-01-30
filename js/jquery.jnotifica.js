@@ -12,7 +12,7 @@
 (function($){
   var
     IE6 = $.browser.msie && /MSIE 6.0/.test(navigator.userAgent),
-    Timer;
+    Timer, IE6FIX;
     
   $.jnotifica_defaults = {
     margin    : 0,
@@ -33,7 +33,7 @@
     effect     : 'slide', // 'slide', 'fade' or 'none'
     speed      : 500,
     timeout    : 5000,
-    clickNClose: true,
+    clickClose : true, // Click to close?
     close      : { // Close button properties, or FALSE for no close button
       text : '[CLOSE]',
       css  : {
@@ -66,8 +66,24 @@
   }
 
   function remove(obj){
+    clearInterval(IE6FIX);
+    clearTimeout(Timer);
     $(obj).find('div').unbind('click');
     $(obj).stop().remove();
+  }
+
+  function ie6TopFix(){
+    var element = document.getElementById('jnotifica_main');
+    if(element){
+      element.style.top = parseInt(document.documentElement.scrollTop) + 'px';
+    }
+  }
+
+  function ie6BottomFix(){
+    var element = document.getElementById('jnotifica_main');
+    if(element){
+      element.style.top = parseInt(document.documentElement.scrollTop + document.documentElement.clientHeight - element.offsetHeight) + 'px';
+    }
   }
 
   function show(msg, opt){
@@ -118,6 +134,16 @@
     else
       Main.css('top',0);
 
+    if(IE6){
+      Bg.css('height','1000px');
+      if(opt.position == 'bottom'){
+        Main.css('bottom','auto');
+        IE6FIX = setInterval(function(){ie6BottomFix()},50);
+      }else{
+        IE6FIX = setInterval(function(){ie6TopFix()},50);
+      }
+    }
+
     if(opt.width != 'all'){
       Spc.css('width',parseInt(opt.width));
       if(opt.align == 'left')
@@ -137,11 +163,11 @@
           .css(opt.close.css)
           .css('zIndex', opt.zIndex + 4)
           .html(opt.close.text)
-          .click(function(){ close(Main) })
+          .click(function(){close(Main)})
       )
     }
 
-    $('body').prepend(
+    $('body').append(
       Main.append(
         Spc.append(
           Cont.append(Bg).append(Msg)
@@ -165,8 +191,8 @@
         Main.slideDown(opt.speed, start);
     }
 
-    if(opt.clickNClose)
-      Cont.click(function(){ close(Main) });
+    if(opt.clickClose)
+      Cont.click(function(){close(Main)});
 
     Main.data({
       effect: opt.effect,
@@ -180,7 +206,6 @@
 
     var opts = $.extend(true, {}, $.jnotifica_defaults, opt);
 
-    clearTimeout(Timer);
     remove($('#jnotifica_main'));
 
     show(msg, opts);
