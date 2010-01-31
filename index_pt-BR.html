@@ -1,11 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>jNotifica - A jQuery Notifications Plugin</title>
   <meta name="robots" content="index, follow"/>
-  <meta name="description" content="jNotifica, A Awesome jQuery Notifications Plugin"/>
-  <meta name="keywords" content="jQuery, plugin, notify, javascript, notifications, alets, messages"/>
+  <meta name="description" content="jNotifica, Um plugin de notificações pra jQuery"/>
+  <meta name="keywords" content="jQuery, plugin, notificações, javascript, notas, alertas, notifica, mensagens"/>
   <meta name="author" content="Lenon Marcel"/>
   <link rel="stylesheet" type="text/css" href="css/default.css"/>
   <link rel="stylesheet" type="text/css" href="css/sh_style.css"/>
@@ -21,19 +21,19 @@
     <h1>
       <a href="index.html">
         <img src="images/jnotifica-logo.png" alt="jNotifica (logo)" title="Index" />
-      </a> A jQuery Notifications Plugin
+      </a> Um plugin de notificações pra jQuery
     </h1>
   </div>
-  <p style="text-align: right;"><small><a href="index_pt-BR.html"><em>Versão em Português (Brasil) &rarr;</em></a></small></p>
+  <p style="text-align: right;"><small><a href="index.html"><em>English version of this page &rarr;</em></a></small></p>
   <div id="content">
-    <h2>What is it?</h2>
+    <h2>O que é?</h2>
       <p>
-        jNotifica is a jQuery plugin that provides a beautiful and simple
-        notifications system. It's usefull for substitute JavaScript alerts.
+        O jNotifica é um plugin pra jQuery que provê um sistema bonito e simples de notificações.
+        É útil para substituir os alerts do JavaScript.
       </p>
-    <h2>It works in which browsers?</h2>
+    <h2>Funciona em quais navegadores?</h2>
       <p>
-        jNotifica is compatible with the most of modern browsers:
+        O jNotifica é compatível com a maioria dos navegadores modernos:
       </p>
       <ul>
         <li>Firefox</li>
@@ -42,15 +42,15 @@
         <li>Internet Explorer 7</li>
         <li>Internet Explorer 8</li>
       </ul>
-      <h4>And also Microsoft Internet Explorer 6, but...</h4>
+      <h4>E também o Microsoft Internet Explorer 6, mas...</h4>
       <p>
-        ...there is a poor support, because IE6 don't support CSS position: fixed.
-        I had to use a "gambiarra" (something like "quick fix" in English), and
-        this solution not provides a good "user experience". But works.
+        ...é um suporte ruim, pelo fato de o IE6 não suportar a propriedade CSS position: fixed.
+        Precisei utilizar uma "gambiarra" para oferecer o suporte ao IE6, e essa solução
+        não provê uma boa "experiência do usuário". Mas funciona.
       </p>
-    <h2>Some examples:</h2>
+    <h2>Alguns exemplos:</h2>
       <p>
-        <button id="example_1">Example 1</button> - Top message
+        <button id="example_1">Exemplo 1</button> - Mensagem no topo
       </p>
 <pre class="sh_javascript">
 $.jnotifica('Hello from Brazil!',{
@@ -66,7 +66,7 @@ $.jnotifica('Hello from Brazil!',{
 });
 </pre>
       <p>
-        <button id="example_2">Example 2</button> - Right/bottom message
+        <button id="example_2">Exemplo 2</button> - Mensagem no canto inferior direito
       </p>
 <pre class="sh_javascript">
 $.jnotifica('Hey! You here? ;-D',{
@@ -78,7 +78,7 @@ $.jnotifica('Hey! You here? ;-D',{
 });
 </pre>
       <p>
-        <button id="example_3">Example 3</button> - Big bottom message
+        <button id="example_3">Exemplo 3</button> - Mensagem grande, na parte inferior
       </p>
 <pre class="sh_javascript">
 var timer, color;
@@ -97,7 +97,7 @@ $.jnotifica('BUY ME! BUY ME!',{
 });
 </pre>
       <p>
-        <button id="example_4">Example 4</button> - Message with HTML
+        <button id="example_4">Exemplo 4</button> - Mensagem com HTML
         <span class="example_4" style="display: none;">HI! <img src="images/awesome-smile.png" width="24" height="24" alt="awesome smile" /></span>
       </p>
 <pre class="sh_javascript">
@@ -110,7 +110,7 @@ $('span.example_4').jnotifica({
 });
 </pre>
       <p>
-        <button id="example_5">Example 5</button> - Rounded corners
+        <button id="example_5">Exemplo 5</button> - Cantos arredondados
       </p>
 <pre class="sh_javascript">
 $.jnotifica('Beautiful! *-*',{
@@ -125,28 +125,28 @@ $.jnotifica('Beautiful! *-*',{
   classes   : 'rounded_corners'
 });
 </pre>
-    <h2>Basic usage:</h2>
-      <h3>Show notification:</h3>
+    <h2>Uso básico:</h2>
+      <h3>Exibir notificação:</h3>
         <p>
-          <code>$.jnotifica(MESSAGE[, OPTIONS]);</code> <em>...or:</em>
-          <code>$.jN(MESSAGE[, OPTIONS]);</code>
+          <code>$.jnotifica(MENSAGEM[, OPÇÕES]);</code> <em>...ou:</em>
+          <code>$.jN(MENSAGEM[, OPÇÕES]);</code>
         </p>
-      <h3>Close notification:</h3>
+      <h3>Fechar a notificação:</h3>
         <p>
-          <code>$.jnotifica.close();</code> <em>...or:</em>
+          <code>$.jnotifica.close();</code> <em>...ou:</em>
           <code>$.jN.close();</code>
         </p>
-      <h3>Notification from element:</h3>
+      <h3>Notificação a partir de um elemento:</h3>
         <p>
-          <code>$(ELEMENT).jnotifica([OPTIONS]);</code> <em>...or:</em>
+          <code>$(ELEMENT).jnotifica([OPTIONS]);</code> <em>...ou:</em>
           <code>$(ELEMENT).jN([OPTIONS]);</code>
         </p>
-    <h2>All options:</h2>
+    <h2>Lista de oções:</h2>
       <table>
         <thead>
           <tr>
-            <th style="width: 25%;">Option</th>
-            <th style="width: 20%;">Default value</th>
+            <th style="width: 25%;">Opção</th>
+            <th style="width: 20%;">Valor padrão</th>
             <th></th>
           </tr>
         </thead>
@@ -154,27 +154,27 @@ $.jnotifica('Beautiful! *-*',{
           <tr>
             <td>margin</td>
             <td>0</td>
-            <td>In pixels</td>
+            <td>Em pixels</td>
           </tr>
           <tr>
             <td>position</td>
             <td>top</td>
-            <td>Position of notifications, accepts 'top' or 'bottom'</td>
+            <td>Posição da notificação, é aceito 'top' ou 'bottom'</td>
           </tr>
           <tr>
             <td>width</td>
             <td>all</td>
-            <td>Width in pixels, or 'all' for 100%</td>
+            <td>Largura em pixels, ou 'all' para 100% de largura</td>
           </tr>
           <tr>
             <td>align</td>
             <td>center</td>
-            <td>'center', 'left' or 'right' - only used with width != 'all'</td>
+            <td>'center', 'left' ou 'right' - usado somente quando width != 'all'</td>
           </tr>
           <tr>
             <td>padding</td>
             <td>25</td>
-            <td>In pixels</td>
+            <td>Em pixels</td>
           </tr>
           <tr>
             <td>background</td>
@@ -189,17 +189,17 @@ $.jnotifica('Beautiful! *-*',{
           <tr>
             <td>color</td>
             <td>#fff</td>
-            <td>Text color</td>
+            <td>Cor do texto</td>
           </tr>
           <tr>
             <td>opacity</td>
             <td>0.8</td>
-            <td>Background opacity</td>
+            <td>Opacidade do background</td>
           </tr>
           <tr>
             <td>cursor</td>
             <td>pointer</td>
-            <td>Mouse cursor</td>
+            <td>Cursor do mouse</td>
           </tr>
           <tr>
             <td>msgCss</td>
@@ -208,17 +208,17 @@ $.jnotifica('Beautiful! *-*',{
               fontFamily: 'Arial, sans-serif',<br/>
               textAlign: 'left'<br/>
             }</td>
-            <td>CSS for message</td>
+            <td>CSS para a mensagem</td>
           </tr>
           <tr>
             <td>effect</td>
             <td>slide</td>
-            <td>Effect for show/close - accepts: 'slider', 'fade' or 'none'</td>
+            <td>Efeito para abrir/fechar - aceito: 'slider', 'fade' ou 'none'</td>
           </tr>
           <tr>
             <td>speed</td>
             <td>500</td>
-            <td>Effect speed</td>
+            <td>Velocidade do efeito</td>
           </tr>
           <tr>
             <td>timeout</td>
@@ -228,7 +228,7 @@ $.jnotifica('Beautiful! *-*',{
           <tr>
             <td>clickClose</td>
             <td>true</td>
-            <td>Click to close notification?</td>
+            <td>Clicar para fechar?</td>
           </tr>
           <tr>
             <td>close</td>
@@ -243,36 +243,36 @@ $.jnotifica('Beautiful! *-*',{
                 cursor: 'pointer'<br/>
               }<br/>
             }</td>
-            <td>Close button properties, or FALSE for no close button</td>
+            <td>Propriedades do botão "Fechar", ou FALSE para não exibir o botão</td>
           </tr>
           <tr>
             <td>onShow</td>
             <td>function(main){}</td>
-            <td>Callback called on open notification</td>
+            <td>Função Callback chamada ao abrir a notificação</td>
           </tr>
           <tr>
             <td>onClose</td>
             <td>function(){}</td>
-            <td>Callback called on close notification</td>
+            <td>Função Callback chamada ao fechar a notificação</td>
           </tr>
           <tr>
             <td>classes</td>
             <td>''</td>
-            <td>Extra classes for main DIV</td>
+            <td>Classes extra para a DIV principal</td>
           </tr>
         </tbody>
       </table>
-    <h2>GitHub repository:</h2>
+    <h2>Repositório no GitHub:</h2>
       <p>
-        All jNotifica source code (including this page) is <a href="http://github.com/lenon/jNotifica">available on Github</a>.
+        Todo o código fonte do jNotifica está <a href="http://github.com/lenon/jNotifica">disponível no Github</a>.
       </p>
     <h2>Download:</h2>
       <p>
-        Choose: <a href="js/jquery.jnotifica.js">Uncompressed</a> or <a href="js/jquery.jnotifica.min.js">minified version</a>.
+        Escolha: <a href="js/jquery.jnotifica.js">Versão descompactada</a> ou <a href="js/jquery.jnotifica.min.js">versão compactada (minified)</a>.
       </p>
-    <h2>Donate:</h2>
+    <h2>Faça uma doação:</h2>
       <p>
-        I need your support. If you like <a href="http://github.com/lenon/">my projects</a>, please make me a donation. :)
+        Eu preciso do seu apoio. Se você gosta de <a href="http://github.com/lenon/">meus projetos</a>, por favor faça uma doação. :)
       </p>
       <div style="text-align:center;">
         <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
@@ -291,12 +291,11 @@ $.jnotifica('Beautiful! *-*',{
           </p>
         </form>
       </div>
-    <h2>Contact:</h2>
+    <h2>Contato:</h2>
       <p>
-        You can contact me through my email address: <em>lenon.marcel ~a~ gmail.com</em>.
-        Or through <a href="http://twitter.com/lenonm">my Twitter</a>.
+        Você pode entrar em contato comigo através do meu email: <em>lenon.marcel ~a~ gmail.com</em>. Ou através do <a href="http://twitter.com/lenonm">meu Twitter</a>.
       </p>
-    <h4>Enjoy, and sorry for my bad english. :)</h4>
+    <h4>Faça bom uso. :)</h4>
   </div>
 </div>
 </body>

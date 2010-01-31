@@ -23,31 +23,40 @@ a img{
 #header h1 a{
   color:#043136;
 }
+#header h1 a img{
+  margin-right: 20px;
+}
 div.nav{
   display:inline;
 }
-#header h1 img{
+img{
   vertical-align:middle;
 }
-code{
+code, pre{
   display:block;
   margin:10px 0;
+  font-size: 130%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #f0f0f0;
 }
 table{
   width:100%;
+  text-align: left;
 }
 table td{
   padding:8px;
   border:1px solid #ccc;
+  background: #f0f0f0;
 }
 #content{
   text-align:justify;
 }
-
-.jnotifica_extra_class{
+.rounded_corners{
   font-weight: bold;
 }
-.jnotifica_extra_class .jnotifica_bg{
+.rounded_corners .jnotifica_bg{
+  border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
 }

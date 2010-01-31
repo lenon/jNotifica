@@ -1,5 +1,5 @@
 /*!
- * jQuery jNotifica Plugin v3 Alpha
+ * jQuery jNotifica Plugin v3
  * http://jnotifica.lenonmarcel.com.br/
  *
  * Copyright 2009, 2010 Lenon Marcel
@@ -45,14 +45,19 @@
         cursor  : 'pointer'
       }
     },
+    onShow  : function(main){},
+    onClose : function(){},
     classes : '' // extra classes for the main div
   }
 
   function close(obj){
     var
-      Obj = $(obj),
-      call = function(){
+      Obj    = $(obj),
+      onClose= Obj.data('onClose'),
+      call   = function(){
         remove(Obj);
+        if($.isFunction(onClose))
+          onClose();
       },
       spd = Obj.data('speed');
 
@@ -198,12 +203,16 @@
       Cont.click(function(){close(Main)});
 
     Main.data({
-      effect: opt.effect,
-      speed : opt.speed
+      effect : opt.effect,
+      speed  : opt.speed,
+      onClose: opt.onClose
     });
+
+    if($.isFunction(opt.onShow))
+      opt.onShow(Main);
   }
 
-  $.jnotifica = function(msg, opt){
+  $.jnotifica = $.jN = function(msg, opt){
     msg  = msg? msg : 'Hello';
     opt  = opt? opt : {};
 
@@ -214,9 +223,13 @@
     show(msg, opts);
   }
 
+  $.fn.jnotifica = $.fn.jN = function(options){
+    return $.jN($(this).html(), options);
+  }
+
   $.jnotifica.close = function(){
     close($('#jnotifica_main'));
   }
   
-  $.jNotificaVersion = 'v3 Alpha';
+  $.jnotifica.version = 'v3';
 })(jQuery);
