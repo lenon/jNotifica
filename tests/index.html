@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>jNotifica - Tests page</title>
+  <script type="text/javascript" src="../js/jquery.js"></script>
+  <script type="text/javascript" src="../js/jquery.jnotifica.js"></script>
+  <script type="text/javascript">
+  jQuery(function(){
+    //console.log('DOM LOADED');
+    $('#button1').click(function(){
+      $.jNotifica('Without options');
+    })
+    $('#button2').click(function(){
+      $.jNotifica('Spacing 10, width 200, align center',{
+        spacing: 10,
+        width: 201,
+        align: 'center'
+      });
+    })
+    $('#button3').click(function(){
+      $.jNotifica('lal',{
+        spacing: 10
+      });
+    })
+  });
+  </script>
+  <style type="text/css">
+  #container{
+    padding: 40px;
+    margin: 100px 0;
+  }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <button id="button1">Test1</button>
+    <button id="button2">Test2</button>
+    <button id="button3">Test3</button>
+    <button id="button4">Test4</button>
+    <button id="button5">Test5</button>
+    <button id="button6">Test6</button>
+  </div>
+</body>
+</html>

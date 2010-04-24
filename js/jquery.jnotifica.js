@@ -21,19 +21,18 @@
     
     var
       // Main element
-      main = $('<div class="jnotifica_main" />').css({
+      main = $('<div class="jnotifica_main"/>').css({
         position : 'fixed',
         left     : spacing,
         right    : spacing,
         overflow : 'hidden',
-        zIndex   : options.zIndex,
-        width    : options.width != 'all' ? options.width : null
+        zIndex   : options.zIndex
       }),
       // Spacer element
-      spacer = $('<div class="jnotifica_spacer" />').css({
+      spacer = $('<div class="jnotifica_spacer"/>').css({
         padding: options.padding
       }),
-      message = $('<div class="jnotifica_message" />').html(text);
+      message = $('<div class="jnotifica_message"/>').html(text);
       
     // Appends the message in the spacer, and the spacer in main element
     main.append(spacer.append(message));
@@ -43,6 +42,7 @@
     
     // Align
     if(options.width != 'all'){
+      main.css('width',options.width);
       switch(options.align){
         case 'center':
           main.css({
