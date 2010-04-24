@@ -1,6 +1,6 @@
 jQuery jNotifica Plugin
 ======================
-*  Version: 3
+*  Version: DEVELOPMENT (3.1)
 *  Homepage: [jnotifica.lenonmarcel.com.br](http://jnotifica.lenonmarcel.com.br/)
 *  Author: [Lenon Marcel](http://lenonmarcel.com.br/)
 
