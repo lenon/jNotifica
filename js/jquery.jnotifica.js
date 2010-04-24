@@ -1,5 +1,5 @@
 /*!
- * jQuery jNotifica Plugin v3
+ * jQuery jNotifica Plugin - DEVELOPMENT VERSION
  * http://jnotifica.lenonmarcel.com.br/
  *
  * Copyright 2009, 2010 Lenon Marcel
@@ -7,8 +7,76 @@
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
  *
- * Date: 2010-01-30 (Sat, 30 January 2010)
+ * Date: UNKNOWN
  */
+(function($){
+  // Shortcut
+  $.jn = function(text, params){
+    
+    params = typeof params == undefined ? {} : params;
+    
+    // Merge options
+    var options = $.extend(true, {}, $.jn.defaults, params),
+        spacing = options.spacing;
+    
+    var
+      // Main element
+      main = $('<div class="jnotifica_main" />').css({
+        position : 'fixed',
+        left     : spacing,
+        right    : spacing,
+        overflow : 'hidden',
+        zIndex   : options.zIndex,
+        width    : options.width != 'all' ? options.width : null
+      }),
+      // Spacer element
+      spacer = $('<div class="jnotifica_spacer" />').css({
+        padding: options.padding
+      }),
+      message = $('<div class="jnotifica_message" />').html(text);
+      
+    // Appends the message in the spacer, and the spacer in main element
+    main.append(spacer.append(message));
+    
+    // Check position, defined in the options
+    options.position == 'top' ? main.css('top', spacing) : main.css('bottom', spacing);
+    
+    // Align
+    if(options.width != 'all'){
+      switch(options.align){
+        case 'center':
+          main.css({
+            left: '50%',
+            right: 'auto',
+            marginLeft: - parseInt(parseInt(options.width) / 2)
+          });
+        break;
+        case 'left':
+          main.css('right', 'auto');
+        case 'right':
+          main.css('left', 'auto');
+      }
+    }
+    
+    main.css('background','black');
+    
+    // Inserts the element in the document
+    $('body').prepend(main);
+  }
+  
+  $.jn.defaults = {
+    spacing   : 0,
+    padding   : 25,
+    width     : 'all', // width in pixes or 'all' for 100%
+    position  : 'top', // top or bottom
+    align     : 'center', // center, left or right (only used when width != all)
+    zIndex    : 100
+  }
+  
+  $.jNotifica = $.jN = $.jn;
+  
+})(jQuery)
+/*
 (function($){
   var
     IE6 = $.browser.msie && /MSIE 6.0/.test(navigator.userAgent),
@@ -233,3 +301,4 @@
   
   $.jnotifica.version = 'v3';
 })(jQuery);
+*/
