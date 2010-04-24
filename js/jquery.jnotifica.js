@@ -12,9 +12,6 @@
 (function($){
   // Shortcut
   $.jn = function(text, params){
-    
-    params = typeof params == undefined ? {} : params;
-    
     // Merge options
     var options = $.extend(true, {}, $.jn.defaults, params),
         spacing = options.spacing;
