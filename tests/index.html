@@ -12,17 +12,27 @@
       $.jNotifica('Without options');
     })
     $('#button2').click(function(){
-      $.jNotifica('Spacing 10, width 200, align center',{
+      $.jNotifica("spacing: 10, width: 200, align: 'center'",{
         spacing: 10,
-        width: 201,
+        width: 200,
         align: 'center'
       });
     })
     $('#button3').click(function(){
-      $.jNotifica('lal',{
-        spacing: 10
+      $.jNotifica("spacing: 10, position: 'bottom'",{
+        spacing: 10,
+        position: 'bottom'
       });
     })
+    $('#button4').click(function(){
+      $.jNotifica("spacing: 30, width: 300, padding: 20, align: 'right', classes: 'rounded_corners'", {
+        spacing: 30,
+        width: 300,
+        padding: 20,
+        align: 'right',
+        classes: 'rounded_corners'
+      })
+    });
   });
   </script>
   <style type="text/css">
@@ -30,16 +40,21 @@
     padding: 40px;
     margin: 100px 0;
   }
+  .rounded_corners .jnotifica_alpha{
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
   </style>
 </head>
 <body>
   <div id="container">
-    <button id="button1">Test1</button>
-    <button id="button2">Test2</button>
-    <button id="button3">Test3</button>
-    <button id="button4">Test4</button>
-    <button id="button5">Test5</button>
-    <button id="button6">Test6</button>
+    <button id="button1">Test1</button><br/>
+    <button id="button2">Test2</button><br/>
+    <button id="button3">Test3</button><br/>
+    <button id="button4">Test4</button><br/>
+    <button id="button5">Test5</button><br/>
+    <button id="button6">Test6</button><br/>
   </div>
 </body>
 </html>

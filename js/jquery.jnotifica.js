@@ -13,88 +13,151 @@
   // Shortcut
   $.jn = function(text, params){
     // Merge options
-    var options = $.extend(true, {}, $.jn.defaults, params),
-        spacing = options.spacing;
+    var options = $.extend(true, {}, $.jn.defaults, params);
+    
+    var
+      // 'Shortcut var' for spacing
+      spacing = options.spacing,
+      // Position (top or bottom)
+      position = options.position;
     
     var
       // Main element
-      main = $('<div class="jnotifica_main"/>').css({
-        position : 'fixed',
-        left     : spacing,
-        right    : spacing,
-        overflow : 'hidden',
-        zIndex   : options.zIndex
+      main = $('<div/>',{
+        'class': 'jnotifica_main',
+        css    : {
+          position : 'fixed',
+          left     : spacing,
+          right    : spacing,
+          overflow : 'hidden',
+          zIndex   : options.zIndex
+        }
       }),
-      // Spacer element
-      spacer = $('<div class="jnotifica_spacer"/>').css({
-        padding: options.padding
+      // Alpha element, for opacity
+      alpha = $('<div/>',{
+        'class': 'jnotifica_alpha',
+        css    : {
+          background: options.background,
+          opacity   : options.opacity,
+          position  : 'absolute',
+          top       : 0,
+          left      : 0,
+          width     : '100%',
+          height    : '100%',
+          zIndex    : options.zIndex + 1
+        }
       }),
-      message = $('<div class="jnotifica_message"/>').html(text);
-      
-    // Appends the message in the spacer, and the spacer in main element
-    main.append(spacer.append(message));
+      // Element that will contain the html (or text) of message
+      message = $('<div/>',{
+        'class': 'jnotifica_message',
+        html   : text,
+        css    : {
+          position : 'relative',
+          zIndex   : options.zIndex + 2,
+          padding  : options.padding,
+          color    : options.textColor,
+          textAlign: options.textAlign,
+          fontSize : options.fontSize
+        }
+      });
     
     // Check position, defined in the options
-    options.position == 'top' ? main.css('top', spacing) : main.css('bottom', spacing);
+    position == 'top' ? main.css('top', spacing) : main.css('bottom', spacing);
     
     // Align
     if(options.width != 'all'){
       main.css('width',options.width);
-      switch(options.align){
-        case 'center':
-          main.css({
-            left: '50%',
-            right: 'auto',
-            marginLeft: - parseInt(parseInt(options.width) / 2)
-          });
-        break;
-        case 'left':
-          main.css('right', 'auto');
-        case 'right':
-          main.css('left', 'auto');
+      if(options.align == 'left'){
+        main.css('right', 'auto');
+      } else if(options.align == 'right'){
+        main.css('left', 'auto');
+      } else {
+        main.css({
+          left: '50%',
+          right: 'auto',
+          marginLeft: - parseInt(options.width) / 2
+        });
       }
     }
     
-    main.css('background','black');
+    // Appends the message in the spacer, and the spacer in main element
+    main.append(alpha).append(message).hide()
+        .addClass(options.classes);
     
     // Inserts the element in the document
     $('body').prepend(main);
+    
+    // Shortcut vars
+    var effect = options.effect,
+        speed  = options.speed;
+    
+    //
+    // Showtime!
+    //
+    if(effect == null || effect == 'none'){
+      main.show(); // Or not... :P
+    } else {
+      // Slide effect
+      if(effect == 'slide'){
+        main.slideDown(speed);
+        
+      // Fade effect
+      } else if (effect == 'fade') {
+        main.fadeIn(speed);
+        
+      // Drop effect
+      } else {
+        // Calculates the height plus spacing
+        var height = main.outerHeight() + spacing;
+        
+        // Displays the effect according to position
+        if(position == 'top'){
+          main
+            .css('top', - height)
+            .show()
+            .animate({
+              top: spacing
+            }, speed);
+        } else {
+          main
+            .css('bottom', - height)
+            .show()
+            .animate({
+              bottom: spacing
+            }, speed);
+        }
+      }
+    }
   }
   
   $.jn.defaults = {
+    // Structural options
     spacing   : 0,
     padding   : 25,
     width     : 'all', // width in pixes or 'all' for 100%
     position  : 'top', // top or bottom
     align     : 'center', // center, left or right (only used when width != all)
-    zIndex    : 100
+    zIndex    : 100,
+    
+    // Appearance options
+    background: 'black',
+    textColor : 'white',
+    textAlign : 'center',
+    opacity   : 0.8,
+    fontSize  : '15px',
+    
+    // Animation options
+    effect    : 'drop', // drop, slide, fade or none
+    speed     : 500,
+    timeout   : 5000,
+    
+    // Other stuffs
+    classes   : '' // Extra classes for main div
   }
   
   $.jNotifica = $.jN = $.jn;
-  
 })(jQuery)
 /*
-(function($){
-  var
-    IE6 = $.browser.msie && /MSIE 6.0/.test(navigator.userAgent),
-    Timer, IE6FIX;
-    
-  $.jnotifica_defaults = {
-    margin    : 0,
-    position  : 'top', // 'top' or 'bottom'
-    width     : 'all', // width in pixels, or 'all' for 100%
-    align     : 'center',// 'center', 'left' or 'right' (only used with width != all)
-    padding   : 25,
-    background: '#000',
-    zIndex    : 100,
-    color     : '#fff',
-    opacity   : 0.8,
-    cursor    : 'pointer',
-    msgCss    : {
-      fontSize  : '15px',
-      fontFamily: 'Arial, sans-serif',
-      textAlign : 'left'
-    },
     effect     : 'slide', // 'slide', 'fade' or 'none'
     speed      : 500,
     timeout    : 5000,
