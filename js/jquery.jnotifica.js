@@ -24,7 +24,7 @@
     var
       // Main element
       main = $('<div/>',{
-        'class': 'jnotifica_main',
+        'class': 'jnotificaMain',
         css    : {
           position : 'fixed',
           left     : spacing,
@@ -35,7 +35,7 @@
       }),
       // Alpha element, for opacity
       alpha = $('<div/>',{
-        'class': 'jnotifica_alpha',
+        'class': 'jnotificaAlpha',
         css    : {
           background: options.background,
           opacity   : options.opacity,
@@ -49,7 +49,7 @@
       }),
       // Element that will contain the html (or text) of message
       message = $('<div/>',{
-        'class': 'jnotifica_message',
+        'class': 'jnotificaMessage',
         html   : text,
         css    : {
           position : 'relative',
@@ -94,39 +94,67 @@
     //
     // Showtime!
     //
-    if(effect == null || effect == 'none'){
-      main.show(); // Or not... :P
-    } else {
-      // Slide effect
-      if(effect == 'slide'){
+    switch(effect){
+      case 'slide':
         main.slideDown(speed);
-        
-      // Fade effect
-      } else if (effect == 'fade') {
+      break;
+      case 'fade':
         main.fadeIn(speed);
+      break;
+      case 'drop':
+        var height   = main.outerHeight() + spacing,
+            checkPos = (position == 'top') ? 'top' : 'bottom';
         
-      // Drop effect
-      } else {
-        // Calculates the height plus spacing
-        var height = main.outerHeight() + spacing;
+        var anim = {};
+        anim[checkPos] = spacing;
         
-        // Displays the effect according to position
-        if(position == 'top'){
-          main
-            .css('top', - height)
-            .show()
-            .animate({
-              top: spacing
-            }, speed);
-        } else {
-          main
-            .css('bottom', - height)
-            .show()
-            .animate({
-              bottom: spacing
-            }, speed);
-        }
-      }
+        main
+          .css(checkPos, - height)
+          .show()
+          .animate(anim, speed);
+      break;
+      default:
+        main.show();
+    }
+    
+    main.data('jnotificaOptions', options);
+    
+    if(options.clickClose){
+      main.click($.jn.close);
+    }
+  }
+  
+  $.jn.close = function(){
+    var _this = $(this);
+    var options = _this.data('jnotificaOptions');
+    
+    if(!options)
+      return;
+    
+    console.log(_this);
+    
+    var effect   = options.effect,
+        speed    = options.speed,
+        callback = function(){_this.remove()};
+    
+    switch(effect){
+      case 'slide':
+        _this.slideUp(speed, callback);
+      break;
+      case 'fade':
+        _this.fadeOut(speed, callback);
+      break;
+      case 'drop':
+        var height   = _this.outerHeight() + options.spacing,
+            checkPos = (options.position == 'top') ? 'top' : 'bottom';
+        
+        var anim = {};
+        anim[checkPos] = - height;
+        
+        _this.animate(anim, speed, callback);
+      break;
+      default:
+        callback();
     }
   }
   
@@ -138,6 +166,10 @@
     position  : 'top', // top or bottom
     align     : 'center', // center, left or right (only used when width != all)
     zIndex    : 100,
+    
+    // Events
+    clickClose: true,
+    
     
     // Appearance options
     background: 'black',
@@ -157,208 +189,3 @@
   
   $.jNotifica = $.jN = $.jn;
 })(jQuery)
-/*
-    effect     : 'slide', // 'slide', 'fade' or 'none'
-    speed      : 500,
-    timeout    : 5000,
-    clickClose : true, // Click to close?
-    close      : { // close button properties, or FALSE for no close button
-      text : '[CLOSE]',
-      css  : {
-        color   : '#fff',
-        fontSize: '10px',
-        position: 'absolute',
-        top     : 5,
-        right   : 10,
-        cursor  : 'pointer'
-      }
-    },
-    onShow  : function(main){},
-    onClose : function(){},
-    classes : '' // extra classes for the main div
-  }
-
-  function close(obj){
-    var
-      Obj    = $(obj),
-      onClose= Obj.data('onClose'),
-      call   = function(){
-        remove(Obj);
-        if($.isFunction(onClose))
-          onClose();
-      },
-      spd = Obj.data('speed');
-
-    switch(Obj.data('effect')){
-      case 'none':
-        Obj.hide('', call);
-      case 'fade':
-        Obj.fadeOut(spd, call);
-      default:
-        Obj.slideUp(spd, call);
-    }
-  }
-
-  function remove(obj){
-    clearInterval(IE6FIX);
-    clearTimeout(Timer);
-    $(obj).find('div').unbind('click');
-    $(obj).stop().remove();
-  }
-
-  // ugly support for an ugly browser
-  function ie6TopFix(){
-    var element = document.getElementById('jnotifica_main');
-    if(element){
-      element.style.top = parseInt(document.documentElement.scrollTop) + 'px';
-    }
-  }
-
-  function ie6BottomFix(){
-    var element = document.getElementById('jnotifica_main');
-    if(element){
-      element.style.top = parseInt(document.documentElement.scrollTop + document.documentElement.clientHeight - element.offsetHeight) + 'px';
-    }
-  }
-
-  function show(msg, opt){
-    var
-      Main = $('<div id="jnotifica_main" class="jnotifica_main"/>')
-        .css({
-          position: IE6 ? 'absolute' : 'fixed',
-          overflow: 'hidden',
-          zIndex  : opt.zIndex,
-          width   : '100%',
-          left    : 0
-        })
-        .addClass(opt.classes)
-        .hide(),
-
-      Spc = $('<div class="jnotifica_spc"/>')
-        .css('padding',opt.margin),
-
-      Cont = $('<div class="jnotifica_cont"/>')
-        .css({
-          position:'relative',
-          cursor  : opt.cursor
-        }),
-
-      Bg = $('<div class="jnotifica_bg"/>')
-        .css({
-          position  : 'absolute',
-          height    : '100%',
-          top       : 0,
-          left      : 0,
-          width     : '100%',
-          background: opt.background,
-          zIndex    : opt.zIndex + 1,
-          opacity   : opt.opacity
-        })
-
-      Msg = $('<div class="jnotifica_msg"/>')
-        .css({
-          position: 'relative',
-          zIndex  : opt.zIndex + 2,
-          color   : opt.color,
-          padding : opt.padding
-        })
-        .css(opt.msgCss)
-        .html(msg);
-
-    if(opt.position == 'bottom')
-      Main.css('bottom',0)
-    else
-      Main.css('top',0);
-
-    if(IE6){
-      Bg.css('height','1000px');
-      if(opt.position == 'bottom'){
-        Main.css('bottom','auto');
-        IE6FIX = setInterval(function(){ie6BottomFix()},50);
-      }else{
-        IE6FIX = setInterval(function(){ie6TopFix()},50);
-      }
-    }
-
-    if(opt.width != 'all'){
-      Spc.css('width',parseInt(opt.width));
-      if(opt.align == 'left')
-        Spc.css('float','left')
-      else if(opt.align == 'right')
-        Spc.css('float','right')
-      else
-        Spc.css({
-          marginLeft : 'auto',
-          marginRight: 'auto'
-        })
-    }
-
-    if(opt.close !== false){
-      Cont.append(
-        $('<div class="jnotifica_close"/>')
-          .css(opt.close.css)
-          .css('zIndex', opt.zIndex + 4)
-          .html(opt.close.text)
-          .click(function(){close(Main)})
-      )
-    }
-
-    $('body').append(
-      Main.append(
-        Spc.append(
-          Cont.append(Bg).append(Msg)
-        )
-      )
-    );
-
-    var start = function(){
-      if(opt.timeout > 0)
-        Timer = setTimeout(function(){
-          close(Main);
-        }, opt.timeout);
-    }
-
-    switch(opt.effect){
-      case 'none':
-        Main.show('', start);
-      case 'fade':
-        Main.fadeIn(opt.speed, start);
-      default:
-        Main.slideDown(opt.speed, start);
-    }
-
-    if(opt.clickClose)
-      Cont.click(function(){close(Main)});
-
-    Main.data({
-      effect : opt.effect,
-      speed  : opt.speed,
-      onClose: opt.onClose
-    });
-
-    if($.isFunction(opt.onShow))
-      opt.onShow(Main);
-  }
-
-  $.jnotifica = $.jN = function(msg, opt){
-    msg  = msg? msg : 'Hello';
-    opt  = opt? opt : {};
-
-    var opts = $.extend(true, {}, $.jnotifica_defaults, opt);
-
-    remove($('#jnotifica_main'));
-
-    show(msg, opts);
-  }
-
-  $.fn.jnotifica = $.fn.jN = function(options){
-    return $.jN($(this).html(), options);
-  }
-
-  $.jnotifica.close = function(){
-    close($('#jnotifica_main'));
-  }
-  
-  $.jnotifica.version = 'v3';
-})(jQuery);
-*/
